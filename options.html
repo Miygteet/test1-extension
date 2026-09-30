@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Family Website Manager Settings</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="container">
+    <h1>Family Website Manager settings</h1>
+    <p class="notice"><strong>Transparency notice:</strong> This extension blocks websites on this device using the domains listed below. It does not capture screens, read page contents, collect passwords, or hide its presence.</p>
+
+    <label class="toggle-row">
+      <input id="enabled" type="checkbox">
+      <span>Enable website blocking</span>
+    </label>
+
+    <form id="domain-form">
+      <label for="domain">Add a domain to block</label>
+      <div class="form-row">
+        <input id="domain" name="domain" placeholder="example.com" autocomplete="off" required>
+        <button type="submit">Add</button>
+      </div>
+      <p class="muted">Enter a domain such as <code>example.com</code>. Subdomains are included.</p>
+    </form>
+
+    <h2>Blocked domains</h2>
+    <ul id="domains" class="domain-list"></ul>
+    <p id="empty" class="muted">No domains are currently blocked.</p>
+    <p id="status" role="status" class="status"></p>
+  </main>
+  <script src="options.js"></script>
+</body>
+</html>

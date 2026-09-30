@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Family Website Manager</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="popup">
+  <main>
+    <h1>Family Website Manager</h1>
+    <p class="notice">This extension is active on this managed device. Website rules are visible in Settings.</p>
+    <label class="toggle-row">
+      <input id="enabled" type="checkbox">
+      <span>Blocking enabled</span>
+    </label>
+    <p id="count" class="muted"></p>
+    <button id="settings" type="button">Open settings</button>
+    <p id="status" role="status" class="status"></p>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>
