@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Family Website Manager Dashboard</title>
+  <link rel="stylesheet" href="dashboard-styles.css">
+  <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
+  <script defer src="firebase-config.js" type="module"></script>
+  <script defer src="dashboard.js" type="module"></script>
+</head>
+<body>
+  <div id="auth-section" class="section">
+    <main class="container">
+      <h1>Family Website Manager</h1>
+      <p>Sign in with your Google account to manage your child's website access.</p>
+      <button id="sign-in-btn" type="button">Sign in with Google</button>
+      <p id="auth-status" role="status" class="status"></p>
+    </main>
+  </div>
+
+  <div id="dashboard-section" class="section hidden">
+    <main class="container">
+      <div class="header">
+        <h1>Dashboard</h1>
+        <button id="sign-out-btn" type="button" class="secondary">Sign out</button>
+      </div>
+
+      <section>
+        <h2>Your Family Group</h2>
+        <p class="group-id"><strong>Family Group ID:</strong> <code id="group-id"></code> <button id="copy-id" type="button" class="small">Copy</button></p>
+        <p class="muted">Share this ID with your child to connect their device.</p>
+      </section>
+
+      <section>
+        <h2>Connected Devices</h2>
+        <ul id="devices-list" class="devices-list"></ul>
+        <p id="no-devices" class="muted">No devices connected yet. Share your Family Group ID with your child.</p>
+      </section>
+
+      <section>
+        <h2>Manage Blocked Domains</h2>
+        <form id="domain-form">
+          <label for="new-domain">Add a domain to block</label>
+          <div class="form-row">
+            <input id="new-domain" name="domain" placeholder="example.com" autocomplete="off" required>
+            <button type="submit">Add</button>
+          </div>
+          <p class="muted">This will update all connected devices within seconds.</p>
+        </form>
+
+        <h3>Currently Blocked</h3>
+        <ul id="global-domains" class="domain-list"></ul>
+        <p id="no-domains" class="muted">No domains blocked yet.</p>
+        <p id="domain-status" role="status" class="status"></p>
+      </section>
+
+      <p class="footer"><small>Last updated: <span id="last-updated">Never</span></small></p>
+    </main>
+  </div>
+
+  <p id="loading" class="loading">Loading...</p>
+</body>
+</html>
