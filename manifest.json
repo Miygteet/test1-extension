@@ -1,16 +1,30 @@
 {
   "manifest_version": 3,
-  "name": "Test1 Extension",
+  "name": "Family Website Manager",
   "version": "1.0.0",
-  "description": "My first browser extension",
+  "description": "A transparent parental website-management extension for managed devices.",
   "permissions": [
     "storage",
-    "activeTab"
+    "tabs",
+    "alarms",
+    "declarativeNetRequest"
   ],
   "host_permissions": [
-    "<all_urls>"
+    "http://*/*",
+    "https://*/*"
   ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
   "action": {
-    "default_title": "Test1 Extension"
+    "default_title": "Family Website Manager",
+    "default_popup": "popup.html"
+  },
+  "options_page": "options.html",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
   }
 }
