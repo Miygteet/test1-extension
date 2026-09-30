@@ -1,1 +1,16 @@
-
+{
+  "manifest_version": 3,
+  "name": "Test1 Extension",
+  "version": "1.0.0",
+  "description": "My first browser extension",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "action": {
+    "default_title": "Test1 Extension"
+  }
+}
