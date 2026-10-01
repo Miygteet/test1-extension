@@ -1,11 +1,20 @@
 const api = globalThis.browser ?? globalThis.chrome;
 const enabled = document.querySelector("#enabled");
+const familyGroupIdInput = document.querySelector("#familyGroupId");
+const saveFamilyGroupButton = document.querySelector("#saveFamilyGroup");
+const deviceIdElement = document.querySelector("#deviceId");
+const setupStatus = document.querySelector("#setupStatus");
 const domainInput = document.querySelector("#domain");
 const domainList = document.querySelector("#domains");
 const empty = document.querySelector("#empty");
 const status = document.querySelector("#status");
 
-let settings = { enabled: true, blockedDomains: [] };
+let settings = {
+  enabled: true,
+  blockedDomains: [],
+  familyGroupId: "",
+  deviceId: ""
+};
 
 function normalizeDomain(value) {
   return String(value).trim().toLowerCase()
@@ -13,13 +22,15 @@ function normalizeDomain(value) {
     .replace(/^\*\./, "").replace(/^www\./, "");
 }
 
-function showStatus(message) {
-  status.textContent = message;
-  setTimeout(() => { status.textContent = ""; }, 2500);
+function showStatus(message, element = status) {
+  element.textContent = message;
+  setTimeout(() => { element.textContent = ""; }, 2500);
 }
 
 function render() {
   enabled.checked = settings.enabled;
+  familyGroupIdInput.value = settings.familyGroupId || "";
+  deviceIdElement.textContent = settings.deviceId || "Unavailable";
   domainList.replaceChildren();
   empty.hidden = settings.blockedDomains.length > 0;
 
@@ -38,7 +49,11 @@ function render() {
 
 async function save() {
   await api.storage.local.set(settings);
-  await api.runtime.sendMessage({ type: "refresh-rules" });
+  try {
+    await api.runtime.sendMessage({ type: "refresh-rules" });
+  } catch (error) {
+    console.warn("The background service worker did not respond:", error);
+  }
   render();
 }
 
@@ -67,7 +82,21 @@ enabled.addEventListener("change", async () => {
   showStatus(settings.enabled ? "Blocking enabled" : "Blocking paused");
 });
 
-api.storage.local.get({ enabled: true, blockedDomains: [] }).then((stored) => {
+saveFamilyGroupButton.addEventListener("click", async () => {
+  const familyGroupId = familyGroupIdInput.value.trim();
+  if (!familyGroupId) {
+    showStatus("Paste a Family Group ID first", setupStatus);
+    return;
+  }
+
+  settings.familyGroupId = familyGroupId;
+  await save();
+  showStatus("Family group saved on this device", setupStatus);
+});
+
+api.storage.local.get(settings).then((stored) => {
   settings = { ...settings, ...stored };
   render();
+}).catch((error) => {
+  showStatus("Unable to load extension settings: " + error.message);
 });

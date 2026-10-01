@@ -11,6 +11,18 @@
     <h1>Family Website Manager settings</h1>
     <p class="notice"><strong>Transparency notice:</strong> This extension blocks websites on this device using the domains listed below. It does not capture screens, read page contents, collect passwords, or hide its presence.</p>
 
+    <section aria-labelledby="device-setup-heading">
+      <h2 id="device-setup-heading">Device setup</h2>
+      <p>Paste the Family Group ID from the guardian dashboard to connect this device.</p>
+      <label for="familyGroupId">Family Group ID</label>
+      <div class="form-row">
+        <input id="familyGroupId" type="text" placeholder="Paste Family Group ID" autocomplete="off">
+        <button id="saveFamilyGroup" type="button">Save</button>
+      </div>
+      <p class="muted">This device ID identifies this browser installation: <code id="deviceId">Loading…</code></p>
+      <p id="setupStatus" role="status" class="status"></p>
+    </section>
+
     <label class="toggle-row">
       <input id="enabled" type="checkbox">
       <span>Enable website blocking</span>
